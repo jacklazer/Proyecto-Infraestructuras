@@ -1,2 +1,9 @@
 # Python
 venv/
+
+# Python files
+*.pyc
+__pycache__/
+
+# Django migrations
+*/migrations/
