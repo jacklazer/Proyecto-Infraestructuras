@@ -4,3 +4,6 @@ venv/
 # Python files
 *.pyc
 __pycache__/
+
+# debug.log file
+gestion_tareas/debug.log'
