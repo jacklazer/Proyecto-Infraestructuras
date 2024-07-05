@@ -6,4 +6,4 @@ venv/
 __pycache__/
 
 # debug.log file
-gestion_tareas/debug.log'
+gestion_tareas/debug.log
