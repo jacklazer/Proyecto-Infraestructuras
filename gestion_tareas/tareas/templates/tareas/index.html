@@ -1,0 +1,16 @@
+<!-- tareas/templates/tareas/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gestión de Proyectos y Tareas</title>
+</head>
+<body>
+    <h1>Proyectos</h1>
+    <ul>
+    {% for proyecto in proyectos %}
+        <li><a href="{% url 'proyecto_detalle' id=proyecto.id %}">{{ proyecto.nombre }}</a></li>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'proyecto_nuevo' %}">Nuevo Proyecto</a>
+</body>
+</html>
