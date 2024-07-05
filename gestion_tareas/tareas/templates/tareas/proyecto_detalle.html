@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ proyecto.nombre }}</title>
+</head>
+<body>
+    <h1>Descripción {{ proyecto.nombre }}</h1>
+    <p>{{ proyecto.descripcion }}</p>
+
+    <h1>Tareas {{ proyecto.nombre }}</h1>
+    <ul>
+    {% for tarea in tareas %}
+        <li><a href="{% url 'tarea_detalle' id=tarea.id %}">{{ tarea.nombre }}</a></li>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'proyecto_editar' id=proyecto.id %}">Editar Proyecto</a>
+    <a href="{% url 'tarea_nueva' %}">Nueva Tarea</a>
+</body>
+</html>
