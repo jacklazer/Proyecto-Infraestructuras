@@ -7,3 +7,4 @@ __pycache__/
 
 # debug.log file
 gestion_tareas/debug.log
+gestion_tareas/crud_operations.log
