@@ -2,6 +2,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Proyecto, Tarea
 from .forms import ProyectoForm, TareaForm
+from rest_framework import viewsets
+from .serializers import ProyectoSerializer, TareaSerializer
+import logging
+
+crud_logger = logging.getLogger('crud_logger')
 
 def index(request):
     proyectos = Proyecto.objects.all()
@@ -21,6 +26,7 @@ def proyecto_nuevo(request):
         form = ProyectoForm(request.POST)
         if form.is_valid():
             proyecto = form.save()
+            crud_logger.debug(f"Proyecto creado: {proyecto.nombre}")
             return redirect('proyecto_detalle', id=proyecto.id)
     else:
         form = ProyectoForm()
@@ -31,6 +37,7 @@ def tarea_nueva(request):
         form = TareaForm(request.POST)
         if form.is_valid():
             tarea = form.save()
+            crud_logger.debug(f"Tarea creada: {tarea.nombre}")
             return redirect('tarea_detalle', id=tarea.id)
     else:
         form = TareaForm()
@@ -42,6 +49,7 @@ def proyecto_editar(request, id):
         form = ProyectoForm(request.POST, instance=proyecto)
         if form.is_valid():
             proyecto = form.save()
+            crud_logger.debug(f"Proyecto editado: {proyecto.nombre}")
             return redirect('proyecto_detalle', id=proyecto.id)
     else:
         form = ProyectoForm(instance=proyecto)
@@ -53,6 +61,7 @@ def tarea_editar(request, id):
         form = TareaForm(request.POST, instance=tarea)
         if form.is_valid():
             tarea = form.save()
+            crud_logger.debug(f"Tarea editada: {tarea.nombre}")
             return redirect('tarea_detalle', id=tarea.id)
     else:
         form = TareaForm(instance=tarea)
@@ -61,9 +70,19 @@ def tarea_editar(request, id):
 def proyecto_borrar(request, id):
     proyecto = get_object_or_404(Proyecto, id=id)
     proyecto.delete()
+    crud_logger.debug(f"Proyecto borrado: {proyecto.nombre}")
     return redirect('index')
 
 def tarea_borrar(request, id):
     tarea = get_object_or_404(Tarea, id=id)
     tarea.delete()
+    crud_logger.debug(f"Tarea borrada: {tarea.nombre}")
     return redirect('index')
+
+class ProyectoViewSet(viewsets.ModelViewSet):
+    queryset = Proyecto.objects.all()
+    serializer_class = ProyectoSerializer
+
+class TareaViewSet(viewsets.ModelViewSet):
+    queryset = Tarea.objects.all()
+    serializer_class = TareaSerializer
