@@ -11,6 +11,8 @@
         <li><a href="{% url 'proyecto_detalle' id=proyecto.id %}">{{ proyecto.nombre }}</a></li>
     {% endfor %}
     </ul>
-    <a href="{% url 'proyecto_nuevo' %}">Nuevo Proyecto</a>
+    <a href="{% url 'proyecto_nuevo' %}">
+        <button type="button">Nuevo Proyecto</button>
+    </a>
 </body>
 </html>

@@ -6,6 +6,12 @@
 <body>
     <h1>Descripción {{ tarea.nombre }}</h1>
     <p>{{ tarea.descripcion }}</p>
-    <a href="{% url 'tarea_editar' id=tarea.id %}">Editar tarea</a>
+    <a href="{% url 'tarea_editar' id=tarea.id %}">
+        <button type="button">Editar tarea</button>
+    </a>
+    <br>
+    <a href="{% url 'tarea_borrar' id=tarea.id %}">
+        <button type="button">Eliminar Tarea</button>
+    </a>
 </body>
 </html>

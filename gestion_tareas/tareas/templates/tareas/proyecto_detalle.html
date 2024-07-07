@@ -13,7 +13,16 @@
         <li><a href="{% url 'tarea_detalle' id=tarea.id %}">{{ tarea.nombre }}</a></li>
     {% endfor %}
     </ul>
-    <a href="{% url 'proyecto_editar' id=proyecto.id %}">Editar Proyecto</a>
-    <a href="{% url 'tarea_nueva' %}">Nueva Tarea</a>
+    <a href="{% url 'proyecto_editar' id=proyecto.id %}">
+        <button type="button">Editar Proyecto</button>
+    </a>
+    <br>
+    <a href="{% url 'proyecto_borrar' id=proyecto.id %}">
+        <button type="button">Eliminar Proyecto</button>
+    </a>
+    <br>
+    <a href="{% url 'tarea_nueva' %}">
+        <button type="button">Nueva Tarea</button>
+    </a>
 </body>
 </html>
