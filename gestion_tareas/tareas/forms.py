@@ -9,4 +9,4 @@ class ProyectoForm(forms.ModelForm):
 class TareaForm(forms.ModelForm):
     class Meta:
         model = Tarea
-        fields = ['proyecto', 'nombre', 'descripcion', 'fecha_terminacion']
+        fields = ['nombre', 'descripcion', 'fecha_terminacion']

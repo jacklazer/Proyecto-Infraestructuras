@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ proyecto.nombre }}</title>
+    <title>Editar Proyecto</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -24,30 +24,14 @@
 
     <!-- Contenido Principal -->
     <div class="container mt-4">
-        <h1 class="mb-4">{{ proyecto.nombre }}</h1>
-        <p class="lead">{{ proyecto.descripcion }}</p>
-
-        <h2 class="mb-3">Tareas</h2>
-        <div class="list-group">
-            {% if tareas %}
-                {% for tarea in tareas %}
-                    <a href="{% url 'tarea_detalle' id=tarea.id %}" class="list-group-item list-group-item-action">{{ tarea.nombre }}</a>
-                {% endfor %}
-            {% else %}
-                <div class="list-group-item">No hay tareas asignadas.</div>
-            {% endif %}
-        </div>        
-
-        <br>
-
-        <p class="lead">Fecha de inicio: {{ proyecto.fecha_creacion }}</p>
-        <p class="lead">Fecha de terminación: {{ proyecto.fecha_terminacion }}</p>        
-
-        <div class="mt-4">
-            <a href="{% url 'proyecto_editar' id=proyecto.id %}" class="btn btn-warning me-2">Editar Proyecto</a>
-            <a href="{% url 'proyecto_borrar' id=proyecto.id %}" class="btn btn-danger me-2">Eliminar Proyecto</a>
-            <a href="{% url 'tarea_nueva' proyecto.id %}" class="btn btn-primary">Nueva Tarea</a>
-        </div>
+        <h1 class="mb-4">Crear Proyecto</h1>
+        <form method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-success">Guardar Cambios</button>
+        </form>
     </div>
 
     <!-- Footer -->

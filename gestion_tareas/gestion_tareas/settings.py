@@ -93,8 +93,8 @@ DATABASES = {
         'NAME': 'DB_PIPYD_DATABASE',
         'USER': 'DB_PIPYD_USER',
         'PASSWORD': 'DB_PIPYD_PASSWORD',
-        # 'HOST': 'localhost',
-        'HOST': 'my_stack_db',
+        'HOST': 'localhost',
+        # 'HOST': 'my_stack_db',
         'PORT': '5432',
     }
 }

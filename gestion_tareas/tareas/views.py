@@ -30,18 +30,21 @@ def proyecto_nuevo(request):
             return redirect('proyecto_detalle', id=proyecto.id)
     else:
         form = ProyectoForm()
-    return render(request, 'tareas/proyecto_editar.html', {'form': form})
+    return render(request, 'tareas/proyecto_nuevo.html', {'form': form})
 
-def tarea_nueva(request):
+def tarea_nueva(request, proyecto_id):
+    proyecto = get_object_or_404(Proyecto, pk=proyecto_id)
     if request.method == "POST":
         form = TareaForm(request.POST)
         if form.is_valid():
-            tarea = form.save()
+            tarea = form.save(commit=False)
+            tarea.proyecto = proyecto
+            tarea.save()
             crud_logger.debug(f"Tarea creada: {tarea.nombre}")
             return redirect('tarea_detalle', id=tarea.id)
     else:
         form = TareaForm()
-    return render(request, 'tareas/tarea_editar.html', {'form': form})
+    return render(request, 'tareas/tarea_nueva.html', {'form': form, 'proyecto': proyecto})
 
 def proyecto_editar(request, id):
     proyecto = get_object_or_404(Proyecto, id=id)
@@ -53,7 +56,7 @@ def proyecto_editar(request, id):
             return redirect('proyecto_detalle', id=proyecto.id)
     else:
         form = ProyectoForm(instance=proyecto)
-    return render(request, 'tareas/proyecto_editar.html', {'form': form})
+    return render(request, 'tareas/proyecto_editar.html', {'form': form, 'proyecto': proyecto})
 
 def tarea_editar(request, id):
     tarea = get_object_or_404(Tarea, id=id)
@@ -65,7 +68,7 @@ def tarea_editar(request, id):
             return redirect('tarea_detalle', id=tarea.id)
     else:
         form = TareaForm(instance=tarea)
-    return render(request, 'tareas/tarea_editar.html', {'form': form})
+    return render(request, 'tareas/tarea_editar.html', {'form': form, 'tarea': tarea})
 
 def proyecto_borrar(request, id):
     proyecto = get_object_or_404(Proyecto, id=id)
@@ -75,9 +78,10 @@ def proyecto_borrar(request, id):
 
 def tarea_borrar(request, id):
     tarea = get_object_or_404(Tarea, id=id)
+    proyecto_id = tarea.proyecto.id
     tarea.delete()
     crud_logger.debug(f"Tarea borrada: {tarea.nombre}")
-    return redirect('index')
+    return redirect('proyecto_detalle', id=proyecto_id)
 
 class ProyectoViewSet(viewsets.ModelViewSet):
     queryset = Proyecto.objects.all()
