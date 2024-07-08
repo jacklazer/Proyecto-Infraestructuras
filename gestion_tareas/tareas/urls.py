@@ -8,6 +8,7 @@ router.register(r'proyectos', views.ProyectoViewSet)
 router.register(r'tareas', views.TareaViewSet)
 
 urlpatterns = [
+    path('', views.inicio, name='inicio'),
     path('proyectos/', views.index, name='index'),
     path('proyecto/<int:id>/', views.proyecto_detalle, name='proyecto_detalle'),
     path('tarea/<int:id>/', views.tarea_detalle, name='tarea_detalle'),

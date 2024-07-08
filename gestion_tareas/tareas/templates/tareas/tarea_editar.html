@@ -8,7 +8,9 @@
     <!-- Navegación -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'index' %}">Gestor de Proyectos</a>
+            <a class="navbar-brand" href="{% url 'inicio' %}">Inicio</a>
+            <a class="navbar-brand" > / </a>
+            <a class="navbar-brand" href="{% url 'index' %}">Proyectos</a>
             <a class="navbar-brand" > / </a>
             <a class="navbar-brand" href="{% url 'proyecto_detalle' id=tarea.proyecto.id %}">{{ tarea.proyecto.nombre }}</a>
             <a class="navbar-brand" > / </a>

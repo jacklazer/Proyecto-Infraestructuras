@@ -9,7 +9,7 @@
     <!-- Navegación -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <!-- <a class="navbar-brand" href="{% url 'index' %}">Gestor de Proyectos</a> -->
+            <a class="navbar-brand" href="{% url 'inicio' %}">Inicio</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -27,9 +27,13 @@
     <div class="container mt-4">
         <h1 class="mb-4">Proyectos</h1>
         <div class="list-group">
-        {% for proyecto in proyectos %}
-            <a href="{% url 'proyecto_detalle' id=proyecto.id %}" class="list-group-item list-group-item-action">{{ proyecto.nombre }}</a>
-        {% endfor %}
+            {% if proyectos %}
+                {% for proyecto in proyectos %}
+                    <a href="{% url 'proyecto_detalle' id=proyecto.id %}" class="list-group-item list-group-item-action">{{ proyecto.nombre }}</a>
+                {% endfor %}
+            {% else %}
+                <div class="list-group-item">Aun no hay proyectos creados.</div>
+            {% endif %}
         </div>
         <a href="{% url 'proyecto_nuevo' %}" class="btn btn-primary mt-4">Nuevo Proyecto</a>
     </div>
