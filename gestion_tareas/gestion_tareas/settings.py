@@ -139,7 +139,9 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 LOGGING = {
     'version': 1,
@@ -163,4 +165,15 @@ LOGGING = {
             'propagate': False,
         },
     },
+}
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'TIMEOUT': 300,  # Timeout of 300 seconds (5 minutes) for cache entries (optional)
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000,  # Optional: Maximum number of entries in the cache
+        }
+    }
 }

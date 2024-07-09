@@ -6,6 +6,7 @@ from .forms import ProyectoForm, TareaForm
 from rest_framework import viewsets
 from .serializers import ProyectoSerializer, TareaSerializer
 import logging
+from django.core.cache import cache
 
 crud_logger = logging.getLogger('crud_logger')
 
@@ -17,8 +18,11 @@ def inicio(request):
 
 def index(request):
     try:
-        proyectos = Proyecto.objects.all()
-        crud_logger.debug(f"Proyectos cargados: {proyectos}")
+        proyectos = cache.get('proyectos_cache_key')
+        if not proyectos:
+            proyectos = Proyecto.objects.all()
+            crud_logger.debug(f"Proyectos cargados: {proyectos}")
+            cache.set('proyectos_cache_key', proyectos, timeout=60 * 15)
         return render(request, 'tareas/index.html', {'proyectos': proyectos})
     except Exception as e:
         crud_logger.error(f"Error al cargar los proyectos: {e}")
@@ -56,6 +60,7 @@ def proyecto_nuevo(request):
             if form.is_valid():
                 proyecto = form.save()
                 crud_logger.debug(f"Proyecto creado: {proyecto.nombre}")
+                cache.delete('proyectos_cache_key')
                 return redirect('proyecto_detalle', id=proyecto.id)
         else:
             form = ProyectoForm()
@@ -99,6 +104,7 @@ def proyecto_editar(request, id):
             if form.is_valid():
                 proyecto = form.save()
                 crud_logger.debug(f"Proyecto editado: {proyecto.nombre}")
+                cache.delete('proyectos_cache_key')
                 return redirect('proyecto_detalle', id=proyecto.id)
         else:
             form = ProyectoForm(instance=proyecto)
@@ -140,6 +146,7 @@ def proyecto_borrar(request, id):
         proyecto = get_object_or_404(Proyecto, id=id)
         proyecto.delete()
         crud_logger.debug(f"Proyecto borrado: {proyecto.nombre}")
+        cache.delete('proyectos_cache_key')
         return redirect('index')
     except ObjectDoesNotExist:
         crud_logger.error(f"Proyecto con id {id} no encontrado.")
